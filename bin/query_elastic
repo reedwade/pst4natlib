@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+import sys
+
+from datetime import datetime
+import time
+from elasticsearch import Elasticsearch
+
+
+from optparse import OptionParser
+
+parser = OptionParser()
+
+parser.add_option('--size', '-s',   help="number of items to return (default: %default)", type='int', default=10)
+parser.add_option('--format', '-f',
+    help=" (default: %default)",
+    default='{hit[date]} {hit[subject]} "{hit[collection_name]}/{hit[collection_message_id]}"')
+(options, args) = parser.parse_args()
+
+query = ' '.join(args)
+
+es = Elasticsearch()
+
+res = es.search(
+    index="reedtest",
+    size=options.size,
+    q=query
+    # body={
+    #     'query': {
+    #         'match_all':{}
+    #     }
+    # }
+    )
+
+print "got {res[hits][total]} hits, showing first {limit}, max socre is {res[hits][max_score]}".format(
+    res=res,
+    limit=options.size,
+    )
+
+for hit in res['hits']['hits']:
+    print options.format.format(hit=hit['_source'])
+    # print hit.get('subject')
+
