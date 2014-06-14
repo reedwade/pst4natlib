@@ -94,6 +94,6 @@ Needs further testing but seems to mostly work.
 
 Known Bugs:
 
-    - fails on certain charset encodings and skips injection of messages with at Thai content, probably others
+    - fails on certain charset encodings and skips injection of messages with at least Thai content, probably others
     - needs a lot more testing to be sure
 
