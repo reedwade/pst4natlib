@@ -2,7 +2,7 @@
 
 2014-June-13,14
 Reed Wade
-National Library of NZ -- Heritage Preserve Code Jam
+National Library of New Zealand -- Heritage Preserve Code Jam
 
 PST files from Brian Opie
 
