@@ -1,7 +1,7 @@
 
 
 2014-June-13,14
-Reed Wade
+Reed Wade <reed@typist.geek.nz>
 National Library of New Zealand -- Heritage Preserve Code Jam
 http://natlib.govt.nz/events/heritagepreserve
 
