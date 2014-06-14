@@ -1,0 +1,8 @@
+
+License to be determined.
+
+Intent is for this code to be freely reusable with no restrictions (MIT or similar) but I'd like to see if we can pick the same one to use across
+all the Heritage Code Jam work
+
+-reed
+15 June 2014
