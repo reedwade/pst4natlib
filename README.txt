@@ -76,7 +76,7 @@ Install Elastic Python module:
 Then, install elastic search engine (not described here).
 
 Run the injector script (current version has hardcoded locations to look for
-mbox files and presumes elastic is on local machine.
+mbox files and presumes elastic is on local machine).
 
     bin/load_messages_into_elastic
 
