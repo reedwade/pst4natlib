@@ -25,10 +25,7 @@ for mbox_file in glob.glob('../../PST/mboxes/*'):
     for message in messages:
         count_within_mbox += 1
         count += 1
-        # print "to:{message[to]} from:{message[from]} subject:{message[subject]}".format(
-        #     message=message)
-        # print message.keys()
-        # print message[body]
+
         for message_part in message.walk():
             if message_part.get_content_type() == 'text/plain':
 
@@ -68,7 +65,5 @@ for mbox_file in glob.glob('../../PST/mboxes/*'):
                     count_within_mbox -= 1
                     # raise
 
-
-    # sys.exit(1)
 
 
