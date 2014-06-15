@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
   $("#submit_button").click(function(){
     console.log($("#search_query").val());
-    $.get( "http://localhost:9200/_search?q="+$("#search_query").val()+"&size=20", function( data ) {
+    $.get( "elastic/_search?q="+$("#search_query").val()+"&size=100", function( data ) {
       var text = "";
-      text += "Found "+data['hits']['total']+" records\n\n\n"
+      text += "Found "+data['hits']['total']+" records (showing top 100 only)\n\n\n"
       var x;
       for (x in data['hits']['hits']) {
-        text += data['hits']['hits'][x]['_source']['date']+"        Score: "+data['hits']['hits'][x]['_score']+"        Collection Name: "+data['hits']['hits'][x]['_source']['collection_name']+"        Message ID: "+data['hits']['hits'][x]['_source']['collection_message_id']+"\n";
+        text += "-----------------------------------------------------------------------------------------------------------------------\n";
+        text += "  Date: "+data['hits']['hits'][x]['_source']['date']+"        Score: "+data['hits']['hits'][x]['_score']+"        Collection Name: "+data['hits']['hits'][x]['_source']['collection_name']+"        Message ID: "+data['hits']['hits'][x]['_source']['collection_message_id']+"\n";
         text += "  From: "+data['hits']['hits'][x]['_source']['from']+"\n";
         text += "  To: "+data['hits']['hits'][x]['_source']['to']+"\n";
         text += "  Subject: "+data['hits']['hits'][x]['_source']['subject']+"\n";
+        text += "-----------------------------------------------------------------------------------------------------------------------\n";
         text += "\n";
         text += data['hits']['hits'][x]['_source']['body']+"\n";
         text += "\n";
