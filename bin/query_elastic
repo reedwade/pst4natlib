@@ -6,6 +6,7 @@ from datetime import datetime
 import time
 from elasticsearch import Elasticsearch
 
+index_name = "mail"
 
 from optparse import OptionParser
 
@@ -22,7 +23,7 @@ query = ' '.join(args)
 es = Elasticsearch()
 
 res = es.search(
-    index="reedtest",
+    index=index_name,
     size=options.size,
     q=query
     # body={
@@ -32,12 +33,12 @@ res = es.search(
     # }
     )
 
-print "got {res[hits][total]} hits, showing first {limit}, max socre is {res[hits][max_score]}".format(
+print "got {res[hits][total]} hits, showing first {limit}, max score is {res[hits][max_score]}".format(
     res=res,
     limit=options.size,
     )
 
 for hit in res['hits']['hits']:
     print options.format.format(hit=hit['_source'])
-    # print hit.get('subject')
+
 

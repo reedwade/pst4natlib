@@ -6,7 +6,7 @@
 $(document).ready(function(){
   $("#submit_button").click(function(){
     console.log($("#search_query").val());
-    $.get( "http://10.1.1.24:9200/_search?q="+$("#search_query").val()+"&size=20", function( data ) {
+    $.get( "http://localhost:9200/_search?q="+$("#search_query").val()+"&size=20", function( data ) {
       var text = "";
       text += "Found "+data['hits']['total']+" records\n\n\n"
       var x;
@@ -16,6 +16,9 @@ $(document).ready(function(){
         text += "  To: "+data['hits']['hits'][x]['_source']['to']+"\n";
         text += "  Subject: "+data['hits']['hits'][x]['_source']['subject']+"\n";
         text += "\n";
+        text += data['hits']['hits'][x]['_source']['body']+"\n";
+        text += "\n";
+        text += "-----------------------------------------------------------------------------------------------------------------------\n";
       }
       $( "#output" ).text( text );
     });

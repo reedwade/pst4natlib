@@ -9,12 +9,15 @@ from datetime import datetime
 import time
 from elasticsearch import Elasticsearch
 
+index_name = "mail"
+
 es = Elasticsearch()
 
-print "deleting reedtest index"
-es.indices.delete(index="reedtest")
+if es.indices.exists(index=index_name):
+    print "deleting index", index_name
+    es.indices.delete(index=index_name)
 
-for mbox_file in glob.glob('../../PST/mboxes/*'):
+for mbox_file in glob.glob('../../pst4natlib-data/mboxes/*'):
     print
     print "opening mbox file", mbox_file
     print
@@ -33,18 +36,27 @@ for mbox_file in glob.glob('../../PST/mboxes/*'):
                     print " ",count,
 
                 payload = message_part.get_payload()
-                if message_part.get_content_charset():
-                    try:
-                        payload = payload.decode(message_part.get_content_charset()).encode('utf8')
-                    except Exception, e:
-                        print "skipping message {messageid}: {e}".format(
-                            messageid=message['Message-id'],
-                            e=e,
-                            )
+                source_encoding = message_part.get_content_charset()
+
+                if source_encoding:
+                    if source_encoding == 'windows-874':
+                        # Thai windows-874 isn't in our encoding table but it's the same as iso-8859-11
+                        source_encoding = 'iso-8859-11'
+                else:
+                    # presume latin-1 if not given
+                    source_encoding = 'iso-8859-1'
+
+                try:
+                    payload = payload.decode(source_encoding).encode('utf8')
+                except Exception, e:
+                    print "skipping message {messageid}: {e}".format(
+                        messageid=message['Message-id'],
+                        e=e,
+                        )
+
                 out = {
-                    'index':"reedtest",
+                    'index':index_name,
                     'doc_type':"email",
-                    # id':42,
                     'body':{
                         "subject":  message['subject'],
                         "to":       message['to'],
